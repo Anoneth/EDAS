@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/md_listitem_height">
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            tools:text="15:20" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/textViewDate"
+            android:gravity="center|start"
+            tools:text="Title" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@id/textViewTitle"
+            android:background="?android:attr/listDivider" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

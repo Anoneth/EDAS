@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EDAS</string>
+    <string name="action_settings">Настройки</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="yesterday">Вчера</string>
+    <string name="add">Добавить</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="title_activity_event">Мероприятие</string>
+    <string name="pick_time">Выберите время</string>
+    <string name="date">Дата:</string>
+    <string name="description">Описание:</string>
+    <string name="time">Время:</string>
+    <string name="title">Название:</string>
+    <string name="action_save">Сохранить</string>
+    <string name="action_undo">Отменить</string>
+    <string name="not_empty">Не должно быть пустым</string>
+    <string name="action_add_event">Добавить мероприятие</string>
+    <string name="action_edit_event">Редактировать</string>
+    <string name="past">Прошедшие</string>
+</resources>
