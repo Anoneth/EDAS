@@ -101,8 +101,8 @@ public class EventDbHelper extends SQLiteOpenHelper {
         ArrayList<String> strings = new ArrayList<>();
         String select = "SELECT substr(" + Event.COLUMN_DATE + ", 0, 11) AS sub"
                 + " FROM " + Event.TABLE_NAME
-                + " WHERE sub >= ?"
-                + " GROUP BY sub ORDER BY sub ASC";
+                + " WHERE " + Event.COLUMN_DATE + " > strftime(\'%Y-%m-%d %H:%M\', \'now\')"
+                + " AND sub >= ?" + " GROUP BY sub ORDER BY sub ASC";
 
         Cursor cursor = getReadableDatabase().rawQuery(select, new String[] {date});
         if (cursor.moveToFirst())
@@ -117,7 +117,8 @@ public class EventDbHelper extends SQLiteOpenHelper {
         Log.i("getEventsBefore", date);
         ArrayList<Event> events = new ArrayList<>();
         String select = "SELECT * FROM " + Event.TABLE_NAME
-                + " WHERE " + Event.COLUMN_DATE + " < ? ";
+                + " WHERE " + Event.COLUMN_DATE + " < ? "
+                + "ORDER BY + " + Event.COLUMN_DATE + " DESC";
         Cursor cursor = getReadableDatabase().rawQuery(select, new String[] {date});
         if (cursor.moveToFirst())
             do {
@@ -136,7 +137,9 @@ public class EventDbHelper extends SQLiteOpenHelper {
     public ArrayList<Event> getEventsAtDay(String day) {
         ArrayList<Event> events = new ArrayList<>();
         String select = "SELECT * FROM " + Event.TABLE_NAME
-                + " WHERE substr(" + Event.COLUMN_DATE + ", 0, 11) = ?";
+                + " WHERE " + Event.COLUMN_DATE + " > strftime(\'%Y-%m-%d %H:%M\', \'now\')"
+                +" AND substr(" + Event.COLUMN_DATE + ", 0, 11) = ?"
+                + " ORDER BY + " + Event.COLUMN_DATE + " ASC";
         Cursor cursor = getReadableDatabase().rawQuery(select, new String[] {day});
         Log.i("getEventsAtDay", day);
         if (cursor.moveToFirst())

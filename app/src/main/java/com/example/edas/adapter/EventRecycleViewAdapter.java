@@ -37,7 +37,7 @@ public class EventRecycleViewAdapter extends RecyclerView.Adapter<EventRecycleVi
         }
 
         void bind(Event event) {
-            textViewDate.setText(Tools.getTime(event.getDate()));
+            textViewDate.setText(Tools.getTime(event.getDate(), context));
             textViewTitle.setText(event.getTitle());
         }
 

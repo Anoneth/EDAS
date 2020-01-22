@@ -49,7 +49,9 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return fragments.get(position).getTitle();
+        String tmp = fragments.get(position).getDate();
+        if (tmp.equals("past")) return context.getString(R.string.past);
+        return Tools.getDate(fragments.get(position).getDate(), context);
     }
 
     @Override
@@ -75,20 +77,17 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
 
         ArrayList<Event> pastEvents = dbHelper.getEventsBefore(dateFormat2.format(now));
         if (pastEvents.size() > 0) {
-            fragments.add(getFragment(context.getString(R.string.past)));
+            fragments.add(getFragment("past", context.getString(R.string.past)));
             fragments.get(0).updateContent(pastEvents);
             titles.add(context.getString(R.string.past));
         }
         for (String title : tabTitles) {
-            TabFragment fragment = getFragment(Tools.getDate(title, context));
+            Log.i("Titles", title);
+            TabFragment fragment = getFragment(title, Tools.getDate(title, context));
             fragments.add(fragment);
             fragment.updateContent(dbHelper.getEventsAtDay(title));
         }
         titles.addAll(tabTitles);
-        for (TabFragment fragment : fragments) {
-            Log.i("TabViewPagerAdapter", "fragment " + fragment.getTitle() + " isAdded: " + fragment.isAdded());
-        }
-        Log.i("TabViewPagerAdapter", "notifyDataSetChanged");
         notifyDataSetChanged();
     }
 
@@ -125,16 +124,16 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
         createTabs();
     }
 
-    private TabFragment getFragment(String title) {
+    private TabFragment getFragment(String date, String title) {
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        Log.i("TabViewPagerAdapter", "finding fragment " + title);
+        Log.i("TabViewPagerAdapter", "finding fragment " + date);
         for (Fragment fragment : fragmentList) {
-            Log.i("TabViewPagerAdapter", "found fragment " + ((TabFragment) fragment).getTitle());
-            if (((TabFragment) fragment).getTitle().equals(title)) {
+            Log.i("TabViewPagerAdapter", "found fragment " + ((TabFragment) fragment).getDate());
+            if (((TabFragment) fragment).getDate().equals(date)) {
                 return (TabFragment) fragment;
             }
         }
         isNew = true;
-        return TabFragment.getInstance(this, title, "");
+        return TabFragment.getInstance(this, title, date);
     }
 }

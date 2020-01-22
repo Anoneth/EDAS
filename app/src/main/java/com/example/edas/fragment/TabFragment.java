@@ -34,8 +34,9 @@ public class TabFragment extends Fragment {
         TabFragment fragment = new TabFragment();
         fragment.setTitle(title);
         fragment.setDate(date);
-        Bundle bundle = new Bundle(1);
+        Bundle bundle = new Bundle(2);
         bundle.putString("title", title);
+        bundle.putString("date", date);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -45,6 +46,7 @@ public class TabFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             title = getArguments().getString("title");
+            date = getArguments().getString("date");
         }
     }
 
