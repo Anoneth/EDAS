@@ -30,7 +30,7 @@ public class TabFragment extends Fragment {
     private String title;
     private String date;
 
-    public static final TabFragment getInstance(TabViewPagerAdapter tabViewPagerAdapter, String title, String date) {
+    public static TabFragment getInstance(TabViewPagerAdapter tabViewPagerAdapter, String title, String date) {
         TabFragment fragment = new TabFragment();
         fragment.setTitle(title);
         fragment.setDate(date);
@@ -53,6 +53,7 @@ public class TabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("TabFragment", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

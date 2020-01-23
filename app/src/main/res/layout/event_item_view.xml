@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="wrap_content"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/md_listitem_height">
+        android:layout_height="@android:dimen/notification_large_icon_height">
 
         <TextView
             android:id="@+id/textViewDate"
             android:layout_width="@android:dimen/notification_large_icon_width"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/md_keylines"
             android:gravity="center"
-            android:textAlignment="center"
-            tools:text="15:20" />
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/md_keylines"
             android:layout_toEndOf="@id/textViewDate"
-            android:gravity="center|start"
-            tools:text="Title" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignBottom="@id/textViewTitle"
-            android:background="?android:attr/listDivider" />
+            android:gravity="center|start" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -45,14 +45,13 @@ public class Tools {
     public static String getTime(String date, Context context) {
         long nowDate = new Date().getTime();
         Date sourceDate = new Date();
-        SimpleDateFormat source = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat source = new SimpleDateFormat("yyyy-MM-dd HH:MM");
         try {
             sourceDate = source.parse(date);
         } catch (Exception ex) {
             Log.e("Tools.getDate()", ex.getMessage());
         }
         long eventDate = sourceDate.getTime();
-        Log.i("getTime", date);
         if (nowDate > eventDate) return getDate(date, context) + ", " + date.split(" ")[1];
         return date.split(" ")[1];
     }

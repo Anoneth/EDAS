@@ -36,9 +36,19 @@ public class EventDbHelper extends SQLiteOpenHelper {
 
     }
 
+    public void addEvents(ArrayList<Event> events) {
+        for (Event event : events) {
+            createEvent(event);
+        }
+    }
+
+    public void removeEvents() {
+        getWritableDatabase().execSQL("DELETE FROM " + Event.TABLE_NAME);
+    }
+
     public long createEvent(Event event) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Event.COLUMN_DATE, event.getDate().toString());
+        contentValues.put(Event.COLUMN_DATE, event.getDate());
         contentValues.put(Event.COLUMN_TITLE, event.getTitle());
         contentValues.put(Event.COLUMN_DESC, event.getDescription());
         return getWritableDatabase().insert(Event.TABLE_NAME, null, contentValues);

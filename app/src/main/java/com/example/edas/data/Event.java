@@ -3,6 +3,8 @@ package com.example.edas.data;
 
 import android.provider.BaseColumns;
 
+import org.json.JSONObject;
+
 import java.util.Date;
 
 public class Event {
@@ -63,5 +65,25 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("date", date);
+            jsonObject.put("title", title);
+            jsonObject.put("description", description);
+        } catch (Exception ex) {}
+        return jsonObject;
+    }
+
+    public static Event fromJson(JSONObject object) {
+        Event event = new Event();
+        try {
+            event.setDate(object.getString("date"));
+            event.setTitle(object.getString("title"));
+            event.setDescription(object.getString("description"));
+        } catch (Exception ex) {}
+        return event;
     }
 }

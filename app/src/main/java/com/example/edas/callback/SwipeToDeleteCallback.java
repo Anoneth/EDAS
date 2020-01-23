@@ -26,7 +26,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
         int position = viewHolder.getAdapterPosition();
         eventRecycleViewAdapter.removeEvent(position);
         View view = activity.findViewById(R.id.main_layout);
-        Snackbar snackbar = Snackbar.make(view, R.string.action_undo, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(view, null, Snackbar.LENGTH_LONG);
         snackbar.setAction(R.string.action_undo, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.edas.R;
 import com.example.edas.data.Event;
@@ -25,20 +26,19 @@ import java.util.List;
 public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private final ArrayList<TabFragment> fragments = new ArrayList<>();
-    private final ArrayList<String> titles = new ArrayList<>();
     private final FragmentManager fragmentManager;
 
-    private boolean isNew = false;
+    private EventDbHelper dbHelper;
+    private Context context;
+    private Event removedEvent;
+    private ViewPager viewPager;
 
-    EventDbHelper dbHelper;
-    Context context;
-    Event removedEvent;
-
-    public TabViewPagerAdapter(FragmentManager fragmentManager, Context context) {
+    public TabViewPagerAdapter(FragmentManager fragmentManager, Context context, ViewPager viewPager) {
         super(fragmentManager);
         this.fragmentManager = fragmentManager;
         dbHelper = new EventDbHelper(context);
         this.context = context;
+        this.viewPager = viewPager;
     }
 
     @Override
@@ -59,19 +59,16 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
         return fragments.size();
     }
 
-    @Override
+    /*@Override
     public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
-    }
+    }*/
 
     public void createTabs() {
-        isNew = false;
         fragments.clear();
-        titles.clear();
         DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date now = new Date();
-
 
         ArrayList<String> tabTitles = dbHelper.getDatesAfter(dateFormat1.format(now));
 
@@ -79,16 +76,14 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
         if (pastEvents.size() > 0) {
             fragments.add(getFragment("past", context.getString(R.string.past)));
             fragments.get(0).updateContent(pastEvents);
-            titles.add(context.getString(R.string.past));
         }
         for (String title : tabTitles) {
-            Log.i("Titles", title);
             TabFragment fragment = getFragment(title, Tools.getDate(title, context));
             fragments.add(fragment);
             fragment.updateContent(dbHelper.getEventsAtDay(title));
         }
-        titles.addAll(tabTitles);
         notifyDataSetChanged();
+        if (viewPager.getCurrentItem() + 1 > fragments.size()) viewPager.setCurrentItem(fragments.size() - 1);
     }
 
     public void addEvent(Event event) {
@@ -112,28 +107,17 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
         createTabs();
     }
 
-    public void prepareTabs() {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        for (TabFragment fragment : fragments) {
-            transaction.remove(fragment);
-        }
-        transaction.commit();
-    }
-
     public void restoreTabs() {
         createTabs();
     }
 
     private TabFragment getFragment(String date, String title) {
         List<Fragment> fragmentList = fragmentManager.getFragments();
-        Log.i("TabViewPagerAdapter", "finding fragment " + date);
         for (Fragment fragment : fragmentList) {
-            Log.i("TabViewPagerAdapter", "found fragment " + ((TabFragment) fragment).getDate());
             if (((TabFragment) fragment).getDate().equals(date)) {
                 return (TabFragment) fragment;
             }
         }
-        isNew = true;
         return TabFragment.getInstance(this, title, date);
     }
 }

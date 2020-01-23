@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.edas.R;
-import com.example.edas.data.Event;
-import com.example.edas.data.EventDbHelper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +25,6 @@ import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.zip.Inflater;
 
 public class EventActivity extends AppCompatActivity {
 
@@ -66,7 +63,7 @@ public class EventActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, month);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                editTextDate.setText(new SimpleDateFormat("yyyy-MM-dd", getResources().getConfiguration().locale).format(myCalendar.getTime()));
+                editTextDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(myCalendar.getTime()));
             }
         };
 
@@ -94,15 +91,17 @@ public class EventActivity extends AppCompatActivity {
             }
         });
 
+        Button buttonSetAlarm = findViewById(R.id.buttonSetAlarm);
+
         String action = getIntent().getExtras().getString("action");
         if (action.equals("add")) {
+            buttonSetAlarm.setEnabled(false);
             toolbar.setTitle(getString(R.string.action_add_event));
             isNew = true;
-            //editTextDate.setInputType(InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_DATE);
-            //editTextTime.setInputType(InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_TIME);
             editTextTitle.setInputType(InputType.TYPE_CLASS_TEXT);
             editTextDescription.setInputType(InputType.TYPE_CLASS_TEXT);
         } else if (action.equals("edit")) {
+            buttonSetAlarm.setEnabled(true);
             isNew = false;
             if (getIntent().getExtras().containsKey("id"))
                 id = getIntent().getExtras().getLong("id");
@@ -116,6 +115,19 @@ public class EventActivity extends AppCompatActivity {
             editTextTitle.setText(title);
             editTextDescription.setText(description);
         }
+
+        buttonSetAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventActivity.this, AlarmActivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("date", editTextDate.getText().toString());
+                intent.putExtra("time", editTextTime.getText().toString());
+                intent.putExtra("title", editTextTitle.getText().toString());
+                intent.putExtra("description", editTextDescription.getText().toString());
+                startActivityForResult(intent, 12);
+            }
+        });
     }
 
     @Override
