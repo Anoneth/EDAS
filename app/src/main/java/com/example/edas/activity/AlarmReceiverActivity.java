@@ -26,6 +26,7 @@ public class AlarmReceiverActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i("AlarmRecieverActivity", "onCreate");
         setContentView(R.layout.activity_alarm_receiver);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -190,6 +190,7 @@ public class AlarmActivity extends AppCompatActivity {
                     intent.putExtra("id", getIntent().getExtras().getLong("id"));
                     intent.putExtra("title", getIntent().getExtras().getString("title"));
                     intent.putExtra("description", getIntent().getExtras().getString("description"));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                     PendingIntent pendingIntent = PendingIntent.getActivity(AlarmActivity.this, (int) id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
                     AlarmManager am = (AlarmManager)getSystemService(Activity.ALARM_SERVICE);
                     am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);

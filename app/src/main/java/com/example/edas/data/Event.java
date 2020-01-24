@@ -20,7 +20,8 @@ public class Event {
     public final static String COLUMN_TITLE = "event_title";
     public final static String COLUMN_DESC = "event_desc";
 
-    public Event() {}
+    public Event() {
+    }
 
     public Event(String date, String title, String description) {
         this.date = date;
@@ -73,17 +74,16 @@ public class Event {
             jsonObject.put("date", date);
             jsonObject.put("title", title);
             jsonObject.put("description", description);
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+        }
         return jsonObject;
     }
 
-    public static Event fromJson(JSONObject object) {
+    public static Event fromJson(JSONObject object) throws Exception {
         Event event = new Event();
-        try {
-            event.setDate(object.getString("date"));
-            event.setTitle(object.getString("title"));
-            event.setDescription(object.getString("description"));
-        } catch (Exception ex) {}
+        event.setDate(object.getString("date"));
+        event.setTitle(object.getString("title"));
+        event.setDescription(object.getString("description"));
         return event;
     }
 }
